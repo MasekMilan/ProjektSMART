@@ -1,4 +1,4 @@
-# ProjektSMART
+# PROJEKT: Zavlažovací systém 
 
 ## Tým
 - [Milan Mašek](https://github.com/MasekMilan)
