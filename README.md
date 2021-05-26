@@ -1,4 +1,4 @@
-# ChytraDomacnost
+# ProjektSMART
 
 ## Tým
 - [Milan Mašek](https://github.com/MasekMilan)
