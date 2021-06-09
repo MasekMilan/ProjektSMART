@@ -13,6 +13,15 @@ polomerOhybuHackuNaZaveseni = 20;
 vysecHackuNaZaveseni = 4/5 * vysecKapsle;
 $fn = 100;
 zplosteniTrychtyre = 0.5;
+polomerDerVeSprse = 0.5;
+pocetKruznicDer = 7;
+uhelVnejsichDer = 50; // uhel vnejsiDira, stredKoule, vnejsiDira pred zplostenim!
+polomerSprchy = 15;
+vyskaKomolehoKuzele = 10;
+uhelStrikaniVody = 60;
+polomerOhybuSprchy = 10;
+prodlouzeniSprchySvisle = 30;
+prodlouzeniSprchySikme = 50;
 
 module hacek($fn = 100){      // hacek na zaveseni
     translate([-polomerKvetinace-sirkaKapsle/2+tloustkaSteny,0,vyskaKapsle])
@@ -202,7 +211,101 @@ module kapsleVyrezavaniDer(){
 
 
 
+module sprchaDiry($fn = 100){
 
+    for(i = [1 : pocetKruznicDer])
+        for(j = [0 : 5])
+            rotate([0, 0,60*j+(i%2) * 30])
+                translate([i*(polomerSprchy-5*polomerDerVeSprse)/pocetKruznicDer,0,0])
+                cylinder(r=polomerDerVeSprse, h = 2*polomerSprchy);
+        
+    
+}
+
+
+module hlavice($fn = 100){                      // hlavice sprchy
+    zplosteniKoule = 0.25;              
+    difference(){                               // duty elipsoid
+        scale([1,1,zplosteniKoule])
+            sphere(r = polomerSprchy);
+        scale([1,1,zplosteniKoule])
+            sphere(r = polomerSprchy-tloustkaStenTrubicky);
+        
+        translate([0,0,-polomerSprchy])             // odriznuti dolni pulky
+            cube(2*polomerSprchy, center = true);
+
+        sprchaDiry();   // vyriznutiDer
+    }
+    translate([0,0,-vyskaKomolehoKuzele])           // duty komoly kuzel
+        difference(){
+            cylinder(r1 = polomerTrubicky, r2=polomerSprchy, h = vyskaKomolehoKuzele);
+            cylinder(r1 = polomerTrubicky-tloustkaStenTrubicky, r2=polomerSprchy-tloustkaStenTrubicky, h = vyskaKomolehoKuzele);
+        }
+    
+}
+
+
+module hadickaNadKapsli($fn = 100){
+    translate([-polomerOhybuSprchy,0,prodlouzeniSprchySvisle])                  // oblouk
+        rotate([90,0,0])
+            rotate_extrude(angle=uhelStrikaniVody)
+                translate([polomerOhybuSprchy,0,0])
+                    difference(){
+                        circle(r=polomerTrubicky);
+                        circle(r=polomerTrubicky-tloustkaStenTrubicky);
+                    }
+                    
+        difference(){                                                       // svisle prodlouzeni
+           cylinder(r=polomerTrubicky, h = prodlouzeniSprchySvisle);
+           cylinder(r=polomerTrubicky-tloustkaStenTrubicky, h = prodlouzeniSprchySvisle);    
+        }
+        
+        translate([-polomerOhybuSprchy+polomerOhybuSprchy*cos(uhelStrikaniVody),0,prodlouzeniSprchySvisle+polomerOhybuSprchy*sin(uhelStrikaniVody)])
+            rotate([0,-uhelStrikaniVody,0])                 // sikmeProdlouzeni
+                difference(){
+                   cylinder(r=polomerTrubicky, h = prodlouzeniSprchySikme);
+                   cylinder(r=polomerTrubicky-tloustkaStenTrubicky, h = prodlouzeniSprchySikme);    
+                }
+    
+}
+
+module sprcha(){
+       translate([-sirkaKapsle/2+polomerTrubicky,0,vyskaKapsle]){   // celkove posunuti na misto na kapsli
+           hadickaNadKapsli();
+           translate([polomerOhybuSprchy*(cos(uhelStrikaniVody)-1)-prodlouzeniSprchySikme*sin(uhelStrikaniVody),
+                      0,
+                      prodlouzeniSprchySvisle+polomerOhybuSprchy*sin(uhelStrikaniVody)+prodlouzeniSprchySikme*cos(uhelStrikaniVody)])
+                            rotate([0,-uhelStrikaniVody,0]) // umisteni hlavice
+                                translate([0,0,vyskaKomolehoKuzele])
+                                    hlavice();
+       }
+}
+
+
+
+
+sprcha();
 kapsleVyrezavaniDer();
 dolniOblouk();
 hacek();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
