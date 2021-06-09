@@ -22,6 +22,11 @@ uhelStrikaniVody = 60;
 polomerOhybuSprchy = 10;
 prodlouzeniSprchySvisle = 30;
 prodlouzeniSprchySikme = 50;
+vyskaNalevky = 50;
+polomerNalevky = 40;
+odriznutiNalevky = 1/4;
+nalevkaPodOkrajem = 60;
+
 
 module hacek($fn = 100){      // hacek na zaveseni
     translate([-polomerKvetinace-sirkaKapsle/2+tloustkaSteny,0,vyskaKapsle])
@@ -206,6 +211,14 @@ module kapsleVyrezavaniDer(){
   
         translate([-sirkaKapsle/2+polomerTrubicky,0,0])                 // prutok trubicky casti steny
             cylinder(r=polomerTrubicky-tloustkaStenTrubicky, h = vyskaKapsle);
+        
+        translate([-2*polomerNalevky*odriznutiNalevky+sirkaKapsle/2,0,-vyskaNalevky*(-tloustkaSteny/polomerNalevky+1)+vyskaKapsle-nalevkaPodOkrajem])                                                   // nalevka
+            difference(){                                                 // odriznuti horniho okraje
+                cylinder(r2=polomerNalevky, r1=0,h=vyskaNalevky);  
+                translate([0,0,polomerNalevky+vyskaNalevky-vyskaNalevky*tloustkaSteny/polomerNalevky])
+                    cube(2*polomerNalevky, center = true);
+            }
+
     }
 }
 
@@ -283,12 +296,33 @@ module sprcha(){
 
 
 
+module nalevka(){
+    
+        difference(){
+            translate([-2*polomerNalevky*odriznutiNalevky+sirkaKapsle/2,0,-vyskaNalevky+vyskaKapsle-nalevkaPodOkrajem])
+            cylinder(r2=polomerNalevky, r1=0,h=vyskaNalevky);                   // zakladni kuzel
+            translate([-2*polomerNalevky*odriznutiNalevky+sirkaKapsle/2,0,-vyskaNalevky*(-tloustkaSteny/polomerNalevky+1)+vyskaKapsle-nalevkaPodOkrajem])
+            cylinder(r2=polomerNalevky, r1=0,h=vyskaNalevky);                   // odecitany kuzel
+            
+            translate([-polomerKvetinace-sirkaKapsle/2,0,0])                    // odecteni kapsle
+                rotate([0,0,-vysecKapsle/2])
+                    rotate_extrude(angle=vysecKapsle) 
+                        translate([polomerKvetinace,0,0])      
+                                square([sirkaKapsle, vyskaKapsle]);
+        }
+  
+    
+}
+           
 
+
+
+
+nalevka();
 sprcha();
 kapsleVyrezavaniDer();
 dolniOblouk();
 hacek();
-
 
 
 
