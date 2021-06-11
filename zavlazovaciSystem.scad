@@ -16,7 +16,7 @@ zplosteniTrychtyre = 0.5;
 polomerDerVeSprse = 0.5;
 pocetKruznicDer = 7;
 uhelVnejsichDer = 50; // uhel vnejsiDira, stredKoule, vnejsiDira pred zplostenim!
-polomerSprchy = 15;
+polomerSprchy = 20;
 vyskaKomolehoKuzele = 10;
 uhelStrikaniVody = 60;
 polomerOhybuSprchy = 10;
@@ -26,7 +26,17 @@ vyskaNalevky = 50;
 polomerNalevky = 40;
 odriznutiNalevky = 1/4;
 nalevkaPodOkrajem = 60;
+tloustkaPrickyDole = 1;
+vyskaPrickyDole = 5;
+vnejsiPolomerObjimky = 3;
+vnitriniPolomerObjimky = 1;  
+tloustkaHorniPodlahy=3;
+polomerSroubu = 2;
+obrubaSirka = 3;
+vyskaHornihoVika = 10;
+rezervaProViko = 0.5;
 
+vzdalenostPodlahyOdHornihoOkraje = 30;
 
 module hacek($fn = 100){      // hacek na zaveseni
     translate([-polomerKvetinace-sirkaKapsle/2+tloustkaSteny,0,vyskaKapsle])
@@ -56,9 +66,10 @@ module hacek($fn = 100){      // hacek na zaveseni
 
 
 module kapsleZakladniTvar($fn = 100){ 
+    obrubaKPodlaze();
     translate([-polomerKvetinace-sirkaKapsle/2,0,0])            // celkove posunuti a otoceni kapsle
         rotate([0,0,-vysecKapsle/2]){
-            
+   
             rotate_extrude(angle=vysecKapsle)                  // deravy obdelnik jako bocni prurez 
                 translate([polomerKvetinace,0,0])
                     difference(){
@@ -316,19 +327,121 @@ module nalevka(){
            
 
 
+module dolniUchyceniHridele($fn = 100){
+    difference(){
+        union(){
+            translate([sirkaKapsle/2-polomerTrychtyre,0,-vyskaValceNadTrychtyrem/2])
+                cube([2*polomerTrychtyre, tloustkaPrickyDole,vyskaPrickyDole], center = true);
+            translate([sirkaKapsle/2-polomerTrychtyre,0,-vyskaValceNadTrychtyrem/2])
+                cube([tloustkaPrickyDole, 2*polomerTrychtyre, vyskaPrickyDole], center = true);
+            
+            translate([sirkaKapsle/2-polomerTrychtyre,0,-vyskaValceNadTrychtyrem/2])
+                cylinder(r=vnejsiPolomerObjimky+tloustkaPrickyDole, h = vyskaPrickyDole, center = true);
+        }
+        
+        translate([sirkaKapsle/2-polomerTrychtyre,0,-vyskaValceNadTrychtyrem/2+tloustkaPrickyDole])
+            cylinder(r=vnejsiPolomerObjimky, h=vyskaPrickyDole, center = true);
+        
+    }
+}
 
 
+module obrubaKPodlaze(){
+    translate([0,0,-tloustkaSteny-vzdalenostPodlahyOdHornihoOkraje+vyskaKapsle])
+    difference(){
+        podlaha();
+        podlaha(5);
+    }
+
+} 
+
+
+module podlaha(okraj = 0, vyska=tloustkaSteny){  //vrati podlahu zmensenou o okraj
+    translate([-polomerKvetinace-sirkaKapsle/2,0,0])    // posunuti a otoceni na stred...
+        rotate([0,0,-vysecKapsle/2]){
+             rotate_extrude(angle=vysecKapsle)                  // obdelni jako bocni prurez
+                translate([polomerKvetinace+okraj,0,0])
+                        square([sirkaKapsle-2*okraj, vyska]);
+            linear_extrude(height=vyska) rotate([0,0,vysecKapsle])              // jeden bok
+                hull(){
+                    translate([polomerKvetinace+polomerRohu,0,0])
+                        circle(polomerRohu-okraj);
+                    translate([polomerKvetinace+sirkaKapsle-polomerRohu,0,0])
+                        circle(polomerRohu-okraj);                
+                }
+            linear_extrude(height=vyska)                                       // druhy bok
+                hull(){
+                    translate([polomerKvetinace+polomerRohu,0,0])
+                        circle(polomerRohu-okraj);
+                    translate([polomerKvetinace+sirkaKapsle-polomerRohu,0,0])
+                        circle(polomerRohu-okraj);                        
+                }       
+                
+        }
+}
+
+
+
+module horniViko($fn = 100){
+    translate([0,0,vyskaKapsle])
+    difference(){
+        union(){
+            podlaha(okraj=0, vyska=tloustkaSteny);                              // horni uzaver
+            translate([0,0,-vyskaHornihoVika])
+                podlaha(okraj=rezervaProViko+tloustkaSteny, vyska=vyskaHornihoVika);          // to dole co se ma zasunout
+        }
+        translate([0,0,-vyskaHornihoVika-tloustkaSteny])                    
+            podlaha(okraj=rezervaProViko+2*tloustkaSteny, vyska=vyskaHornihoVika);        // vykrojeni
+        translate([-sirkaKapsle/2+polomerTrubicky,0,0])
+            cylinder(r=polomerTrubicky+rezervaProViko,h=5*vyskaHornihoVika, center = true);     // vykrojeni na sprchu
+        translate([-polomerKvetinace-sirkaKapsle/2+tloustkaSteny+rezervaProViko,0,0])
+        rotate([0,0,-vysecHackuNaZaveseni/2-asin(rezervaProViko/polomerKvetinace)])
+        rotate_extrude(angle=vysecHackuNaZaveseni+2*asin(rezervaProViko/polomerKvetinace))     // odkrojeni vnitrniho oblouku
+        translate([polomerKvetinace-vyskaHornihoVika,0,0])
+        square(vyskaHornihoVika);
+        
+    }
+    translate([0,0,vyskaKapsle])
+    difference(){
+        translate([-sirkaKapsle/2+polomerTrubicky,0,-vyskaHornihoVika])
+            cylinder(r=polomerTrubicky+rezervaProViko+tloustkaSteny,h=vyskaHornihoVika+tloustkaSteny);      // valec
+        translate([-sirkaKapsle/2+polomerTrubicky,0,0])
+            cylinder(r=polomerTrubicky+rezervaProViko,h=5*vyskaHornihoVika, center = true); // v nem znova vykrojeni na sprchu
+        translate([-polomerKvetinace-sirkaKapsle/2,0,0])
+            cylinder(r=polomerKvetinace+tloustkaSteny,h=vyskaHornihoVika);                            // oriznuti oblouku..
+        translate([-polomerKvetinace-sirkaKapsle/2,0,-vyskaHornihoVika])
+            cylinder(r=polomerKvetinace+rezervaProViko+tloustkaSteny,h=vyskaHornihoVika);   
+        translate([-polomerKvetinace-sirkaKapsle/2+tloustkaSteny+rezervaProViko,0,0])   // odkrojeni vnitrniho oblouku
+        rotate([0,0,-vysecHackuNaZaveseni/2-asin(rezervaProViko/polomerKvetinace)])
+        rotate_extrude(angle=vysecHackuNaZaveseni+2*asin(rezervaProViko/polomerKvetinace))
+        translate([polomerKvetinace-vyskaHornihoVika,0,0])
+        square(vyskaHornihoVika);
+     
+    }
+    
+
+
+
+   
+
+
+}
+
+
+
+
+
+
+dolniUchyceniHridele();
 nalevka();
 sprcha();
 kapsleVyrezavaniDer();
 dolniOblouk();
 hacek();
 
-
-
-
-
-
+kapsleVyrezavaniDer();
+color([0,1,0,0.5])
+horniViko();
 
 
 
