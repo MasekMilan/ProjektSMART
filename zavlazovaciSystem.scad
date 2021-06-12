@@ -1,4 +1,4 @@
-sirkaKapsle = 80;
+sirkaKapsle = 90;
 vyskaKapsle = 250;
 vysecKapsle = 80;
 polomerKvetinace = 200;
@@ -34,7 +34,12 @@ tloustkaHorniPodlahy=3;
 polomerSroubu = 2;
 obrubaSirka = 3;
 vyskaHornihoVika = 10;
-rezervaProViko = 0.5;
+rezervaProViko = .5;
+polomerMotoru=18;
+vyskaMotru=20;
+polomerHridele=2;
+vzdalenostSroubuMotoru = 12;
+polomerSroubuNaMotor = 1.5;
 
 vzdalenostPodlahyOdHornihoOkraje = 30;
 
@@ -62,86 +67,39 @@ module hacek($fn = 100){      // hacek na zaveseni
 
 }
                 
-
+module podlaha(okraj = 0, vyska=tloustkaSteny){  //vrati podlahu zmensenou o okraj
+    translate([-polomerKvetinace-sirkaKapsle/2,0,0])    // posunuti a otoceni na stred...
+        rotate([0,0,-vysecKapsle/2]){
+             rotate_extrude(angle=vysecKapsle)                  // obdelni jako bocni prurez
+                translate([polomerKvetinace+okraj,0,0])
+                        square([sirkaKapsle-2*okraj, vyska]);
+            linear_extrude(height=vyska) rotate([0,0,vysecKapsle])              // jeden bok
+                hull(){
+                    translate([polomerKvetinace+polomerRohu,0,0])
+                        circle(polomerRohu-okraj);
+                    translate([polomerKvetinace+sirkaKapsle-polomerRohu,0,0])
+                        circle(polomerRohu-okraj);                
+                }
+            linear_extrude(height=vyska)                                       // druhy bok
+                hull(){
+                    translate([polomerKvetinace+polomerRohu,0,0])
+                        circle(polomerRohu-okraj);
+                    translate([polomerKvetinace+sirkaKapsle-polomerRohu,0,0])
+                        circle(polomerRohu-okraj);                        
+                }       
+                
+        }
+}
 
 
 module kapsleZakladniTvar($fn = 100){ 
     obrubaKPodlaze();
-    translate([-polomerKvetinace-sirkaKapsle/2,0,0])            // celkove posunuti a otoceni kapsle
-        rotate([0,0,-vysecKapsle/2]){
-   
-            rotate_extrude(angle=vysecKapsle)                  // deravy obdelnik jako bocni prurez 
-                translate([polomerKvetinace,0,0])
-                    difference(){
-                        square([sirkaKapsle, vyskaKapsle]);
-                        
-                        translate([tloustkaSteny,tloustkaSteny,0])
-                            square([sirkaKapsle-2*tloustkaSteny, vyskaKapsle-tloustkaSteny]);
-                    }
-                    
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                    
-            linear_extrude(height=vyskaKapsle)  // pudorys zaobleneho boku
-                difference(){                   
-                    hull(){     
-                        translate([polomerKvetinace+polomerRohu,0,0])               // vnejsiCast
-                            circle(polomerRohu);
-                        translate([polomerKvetinace+sirkaKapsle-polomerRohu,0,0])
-                            circle(polomerRohu);
-                    }
-                    
-                    hull(){                                                         // odecteni zmenseneho vnitrku
-                        translate([polomerKvetinace+polomerRohu,0,0])
-                            circle(polomerRohu-tloustkaSteny);
-                        translate([polomerKvetinace+sirkaKapsle-polomerRohu,0,0])
-                            circle(polomerRohu-tloustkaSteny);
-                    }
-                    
-                    translate([polomerKvetinace+sirkaKapsle/2,polomerRohu,0])       // odecteni ctverce -> pulka obrazce
-                        square([2*sirkaKapsle,2*polomerRohu], center = true);
-                }
-                
-//.......................................................................................................
-                
-            linear_extrude(height=vyskaKapsle) rotate([0,0,vysecKapsle])            // znovu pro druhy bok ...
-                difference(){
-                    hull(){
-                        translate([polomerKvetinace+polomerRohu,0,0])
-                            circle(polomerRohu);
-                        translate([polomerKvetinace+sirkaKapsle-polomerRohu,0,0])
-                            circle(polomerRohu);
-                        
-                    }
-                    hull(){
-                        translate([polomerKvetinace+polomerRohu,0,0])
-                            circle(polomerRohu-tloustkaSteny);
-                        translate([polomerKvetinace+sirkaKapsle-polomerRohu,0,0])
-                            circle(polomerRohu-tloustkaSteny);
-                    }
-                    
-                    translate([polomerKvetinace+sirkaKapsle/2,-polomerRohu,0])
-                        square([2*sirkaKapsle,2*polomerRohu], center = true);
-                    }
-                    
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////   
-                    
-            linear_extrude(height=tloustkaSteny) rotate([0,0,vysecKapsle])              // podlaha pod jednim bokem
-                hull(){
-                    translate([polomerKvetinace+polomerRohu,0,0])
-                        circle(polomerRohu);
-                    translate([polomerKvetinace+sirkaKapsle-polomerRohu,0,0])
-                        circle(polomerRohu);                
-                }
-                
-            linear_extrude(height=tloustkaSteny)                                       // podlaha pod druhym bokem
-                hull(){
-                    translate([polomerKvetinace+polomerRohu,0,0])
-                        circle(polomerRohu);
-                    translate([polomerKvetinace+sirkaKapsle-polomerRohu,0,0])
-                        circle(polomerRohu);                        
-                }
-                    
-        }
+      difference(){
+        podlaha(vyska=vyskaKapsle);
+        translate([0,0,tloustkaSteny])
+          podlaha(okraj=tloustkaSteny, vyska=vyskaKapsle);
+      }
+
 }
 
 
@@ -356,29 +314,7 @@ module obrubaKPodlaze(){
 } 
 
 
-module podlaha(okraj = 0, vyska=tloustkaSteny){  //vrati podlahu zmensenou o okraj
-    translate([-polomerKvetinace-sirkaKapsle/2,0,0])    // posunuti a otoceni na stred...
-        rotate([0,0,-vysecKapsle/2]){
-             rotate_extrude(angle=vysecKapsle)                  // obdelni jako bocni prurez
-                translate([polomerKvetinace+okraj,0,0])
-                        square([sirkaKapsle-2*okraj, vyska]);
-            linear_extrude(height=vyska) rotate([0,0,vysecKapsle])              // jeden bok
-                hull(){
-                    translate([polomerKvetinace+polomerRohu,0,0])
-                        circle(polomerRohu-okraj);
-                    translate([polomerKvetinace+sirkaKapsle-polomerRohu,0,0])
-                        circle(polomerRohu-okraj);                
-                }
-            linear_extrude(height=vyska)                                       // druhy bok
-                hull(){
-                    translate([polomerKvetinace+polomerRohu,0,0])
-                        circle(polomerRohu-okraj);
-                    translate([polomerKvetinace+sirkaKapsle-polomerRohu,0,0])
-                        circle(polomerRohu-okraj);                        
-                }       
-                
-        }
-}
+
 
 
 
@@ -432,15 +368,72 @@ module horniViko($fn = 100){
 
 
 
+
+module horniPatro(){
+    translate([0,0,vyskaKapsle-vzdalenostPodlahyOdHornihoOkraje]){
+    difference(){
+        union(){
+            podlaha(okraj=rezervaProViko+tloustkaSteny, vyska=tloustkaHorniPodlahy);
+            translate([sirkaKapsle/2-polomerTrychtyre,0,tloustkaHorniPodlahy])                 // kolem motoru
+                cylinder(r=polomerMotoru+tloustkaSteny, h = vyskaMotru);
+        }
+        translate([sirkaKapsle/2-polomerTrychtyre,0,tloustkaHorniPodlahy])                     // motor
+            cylinder(r=polomerMotoru, h = vyskaMotru);
+        
+        
+        translate([sirkaKapsle/2-polomerTrychtyre,0,0])
+            cylinder(r=polomerHridele, h = tloustkaHorniPodlahy);       // hridel
+        translate([sirkaKapsle/2-polomerTrychtyre,vzdalenostSroubuMotoru/2,0])
+            cylinder(r=polomerSroubuNaMotor, h = tloustkaHorniPodlahy);       // sroubNaMotor1
+                translate([sirkaKapsle/2-polomerTrychtyre,-vzdalenostSroubuMotoru/2,0])
+            cylinder(r=polomerSroubuNaMotor, h = tloustkaHorniPodlahy);       // sroubNaMotor2
+    
+        
+        translate([-polomerKvetinace-sirkaKapsle/2,0,0])    
+            rotate([0,0,vysecKapsle/2])
+                translate([polomerKvetinace+polomerRohu,0,0])
+                    cylinder(r=polomerSroubu,h = tloustkaHorniPodlahy);     // dira vpravo u kvetinace
+     
+        translate([-polomerKvetinace-sirkaKapsle/2,0,0])    
+            rotate([0,0,-vysecKapsle/2])
+                translate([polomerKvetinace+polomerRohu,0,0])
+                    cylinder(r=polomerSroubu,h = tloustkaHorniPodlahy);     // dira vlevo u kvetinace
+        
+        translate([-polomerKvetinace-sirkaKapsle/2,0,0])    
+            rotate([0,0,vysecKapsle/2])
+                translate([polomerKvetinace-polomerRohu+sirkaKapsle,0,0])
+                    cylinder(r=polomerSroubu,h = tloustkaHorniPodlahy);     // dira vpravo dal od kvetinace
+        
+        translate([-polomerKvetinace-sirkaKapsle/2,0,0])    
+            rotate([0,0,-vysecKapsle/2])
+                translate([polomerKvetinace-polomerRohu+sirkaKapsle,0,0])
+                    cylinder(r=polomerSroubu,h = tloustkaHorniPodlahy);     // dira vlevo dal od kvetinace
+            
+        
+    }
+
+
+}
+
+
+
+
+
+
+
+}
+
+
+
+
+horniPatro();
 dolniUchyceniHridele();
 nalevka();
 sprcha();
 kapsleVyrezavaniDer();
 dolniOblouk();
 hacek();
-
 kapsleVyrezavaniDer();
-color([0,1,0,0.5])
 horniViko();
 
 
