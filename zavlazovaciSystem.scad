@@ -35,12 +35,12 @@ polomerSroubu = 2;
 obrubaSirka = 3;
 vyskaHornihoVika = 10;
 rezervaProViko = .5;
-polomerMotoru=18;
+polomerMotoru=15;
 vyskaMotru=20;
 polomerHridele=2;
 vzdalenostSroubuMotoru = 12;
 polomerSroubuNaMotor = 1.5;
-
+vyskaBokuObruby = 10;
 vzdalenostPodlahyOdHornihoOkraje = 30;
 
 module hacek($fn = 100){      // hacek na zaveseni
@@ -93,24 +93,14 @@ module podlaha(okraj = 0, vyska=tloustkaSteny){  //vrati podlahu zmensenou o okr
 
 
 module kapsleZakladniTvar($fn = 100){ 
-    obrubaKPodlaze();
-      difference(){
-        podlaha(vyska=vyskaKapsle);
-        translate([0,0,tloustkaSteny])
-          podlaha(okraj=tloustkaSteny, vyska=vyskaKapsle);
-      }
+  obrubaKPodlaze();
+  difference(){
+    podlaha(vyska=vyskaKapsle);
+    translate([0,0,tloustkaSteny])
+      podlaha(okraj=tloustkaSteny, vyska=vyskaKapsle);
+  }
 
 }
-
-
-
-
-
-
-
-
-
-
 module dolniOblouk($fn = 100){
     difference(){                                           // valec nad trychtyrem
     translate([sirkaKapsle/2-polomerTrychtyre,0,-vyskaValceNadTrychtyrem])
@@ -278,9 +268,7 @@ module nalevka(){
                     rotate_extrude(angle=vysecKapsle) 
                         translate([polomerKvetinace,0,0])      
                                 square([sirkaKapsle, vyskaKapsle]);
-        }
-  
-    
+        }   
 }
            
 
@@ -298,25 +286,66 @@ module dolniUchyceniHridele($fn = 100){
         }
         
         translate([sirkaKapsle/2-polomerTrychtyre,0,-vyskaValceNadTrychtyrem/2+tloustkaPrickyDole])
-            cylinder(r=vnejsiPolomerObjimky, h=vyskaPrickyDole, center = true);
-        
+            cylinder(r=vnejsiPolomerObjimky, h=vyskaPrickyDole, center = true);       
     }
 }
 
 
 module obrubaKPodlaze(){
-    translate([0,0,-tloustkaSteny-vzdalenostPodlahyOdHornihoOkraje+vyskaKapsle])
-    difference(){
-        podlaha();
-        podlaha(5);
+    translate([0,0,-tloustkaSteny-vzdalenostPodlahyOdHornihoOkraje+vyskaKapsle]){         // celkove posunuti
+        difference(){
+            podlaha();
+            podlaha(7);
+        }
+        difference(){   // pravy okraj
+            hull(){
+                translate([-polomerKvetinace-sirkaKapsle/2,0,-vyskaBokuObruby])    
+                    rotate([0,0,vysecKapsle/2])
+                        translate([polomerKvetinace+polomerRohu,0,0])
+                            cylinder(r=polomerRohu,h = vyskaBokuObruby+tloustkaHorniPodlahy);     
+             
+                translate([-polomerKvetinace-sirkaKapsle/2,0,0])    
+                    rotate([0,0,vysecKapsle/2])
+                        translate([polomerKvetinace-polomerRohu+sirkaKapsle,0,-vyskaBokuObruby])
+                            cylinder(r=polomerRohu,h = vyskaBokuObruby+tloustkaHorniPodlahy);     
+            }
+            translate([-polomerKvetinace-sirkaKapsle/2,0,-vyskaBokuObruby+1])               // diry na srouby (1mm vespod)
+                    rotate([0,0,vysecKapsle/2])
+                        translate([polomerKvetinace+polomerRohu,0,0])
+                            cylinder(r=polomerSroubu,h = vyskaBokuObruby+tloustkaHorniPodlahy);     
+             
+            translate([-polomerKvetinace-sirkaKapsle/2,0,0])    
+                rotate([0,0,vysecKapsle/2])
+                    translate([polomerKvetinace-polomerRohu+sirkaKapsle,0,-vyskaBokuObruby+1])
+                        cylinder(r=polomerSroubu,h = vyskaBokuObruby+tloustkaHorniPodlahy); 
+            
+        }
+        difference(){               // levy okraj
+            hull(){
+                translate([-polomerKvetinace-sirkaKapsle/2,0,-vyskaBokuObruby])    
+                        rotate([0,0,-vysecKapsle/2])
+                            translate([polomerKvetinace+polomerRohu,0,0])
+                                cylinder(r=polomerRohu,h = tloustkaHorniPodlahy+vyskaBokuObruby);     
+                
+                
+                translate([-polomerKvetinace-sirkaKapsle/2,0,-vyskaBokuObruby])    
+                    rotate([0,0,-vysecKapsle/2])
+                        translate([polomerKvetinace-polomerRohu+sirkaKapsle,0,0])
+                            cylinder(r=polomerRohu,h = tloustkaHorniPodlahy+vyskaBokuObruby);    
+            }
+            
+                translate([-polomerKvetinace-sirkaKapsle/2,0,-vyskaBokuObruby+1])                     // diry na srouby (1mm vespod...)
+                    rotate([0,0,-vysecKapsle/2])
+                        translate([polomerKvetinace+polomerRohu,0,0])
+                            cylinder(r=polomerSroubu,h = tloustkaHorniPodlahy+vyskaBokuObruby);     
+                
+                translate([-polomerKvetinace-sirkaKapsle/2,0,-vyskaBokuObruby+1])    
+                    rotate([0,0,-vysecKapsle/2])
+                        translate([polomerKvetinace-polomerRohu+sirkaKapsle,0,0])
+                            cylinder(r=polomerSroubu,h = tloustkaHorniPodlahy+vyskaBokuObruby); 
+        }
     }
-
-} 
-
-
-
-
-
+}
 
 module horniViko($fn = 100){
     translate([0,0,vyskaKapsle])
@@ -336,6 +365,11 @@ module horniViko($fn = 100){
         translate([polomerKvetinace-vyskaHornihoVika,0,0])
         square(vyskaHornihoVika);
         
+        translate([-polomerKvetinace-sirkaKapsle/2,0,-vyskaBokuObruby])    
+            rotate([0,0,vysecKapsle/2])                                             // dira na kabel na vlhkomer
+                translate([polomerKvetinace+polomerRohu,0,0])
+                    cylinder(r=polomerRohu-2*tloustkaSteny-rezervaProViko,h = vyskaBokuObruby+tloustkaHorniPodlahy); 
+       
     }
     translate([0,0,vyskaKapsle])
     difference(){
@@ -351,16 +385,8 @@ module horniViko($fn = 100){
         rotate([0,0,-vysecHackuNaZaveseni/2-asin(rezervaProViko/polomerKvetinace)])
         rotate_extrude(angle=vysecHackuNaZaveseni+2*asin(rezervaProViko/polomerKvetinace))
         translate([polomerKvetinace-vyskaHornihoVika,0,0])
-        square(vyskaHornihoVika);
-     
+        square(vyskaHornihoVika);     
     }
-    
-
-
-
-   
-
-
 }
 
 
@@ -370,7 +396,7 @@ module horniViko($fn = 100){
 
 
 module horniPatro(){
-    translate([0,0,vyskaKapsle-vzdalenostPodlahyOdHornihoOkraje]){
+    translate([0,0,vyskaKapsle-vzdalenostPodlahyOdHornihoOkraje])
     difference(){
         union(){
             podlaha(okraj=rezervaProViko+tloustkaSteny, vyska=tloustkaHorniPodlahy);
@@ -408,20 +434,14 @@ module horniPatro(){
             rotate([0,0,-vysecKapsle/2])
                 translate([polomerKvetinace-polomerRohu+sirkaKapsle,0,0])
                     cylinder(r=polomerSroubu,h = tloustkaHorniPodlahy);     // dira vlevo dal od kvetinace
-            
-        
+                    
+                    
+        translate([-sirkaKapsle/2+polomerTrubicky,0,0])                         // trubicka
+            cylinder(r=polomerTrubicky+rezervaProViko, h=tloustkaHorniPodlahy);   
     }
 
-
 }
 
-
-
-
-
-
-
-}
 
 
 
@@ -435,17 +455,3 @@ dolniOblouk();
 hacek();
 kapsleVyrezavaniDer();
 horniViko();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
