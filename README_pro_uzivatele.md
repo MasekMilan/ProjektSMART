@@ -27,6 +27,7 @@
 - Nachází se tam: 
   - přihrádka pro baterie pro jejich snadnou výměnu
   - Arduino pro řízení celého systému
+  - do Arduina také vede kabel se senzory z květináče
   - motor, který pohání vrtuli
 
 ### Funkce motoru
@@ -39,22 +40,33 @@
 - Díky podtlaku se tato voda dostane až do konvice na zalévání a voda se začne rozprašovat po povrchu půdy.
 
 ## Stručný popis fungování
-- Pokud vlhkost v půdě klesne pod danou mez, senzor vlhkosti vyšle signály do Arduina.
+- Pokud vlhkost v půdě klesne pod danou mez, [senzor vlhkosti](https://www.laskarduino.cz/arduino-senzor-vlhkosti-pudy/) vyšle signály do Arduina.
+- Senzor dává logické signály 0 a 1 pro rozpoznání, jestli se má motor zapínat nebo ne.
 - Arduino zapne motor, který je připojen na vrtuli.
 - Vrtule se roztočí a žene vodu seměrem vzůhuru do konvice, která vodu rozmístí po povrchu půdy.
 - Až bude vlhkost v půdě opět dobrá, senzory vlhkosti vyšlou signály Arduinu a to vypne motor.
 - Vrtule se pak tedy točí do té doby, než je vlhkost v půdě opět v normálu.
 
 ## Instalace
-- Zařízení je 
+- Po vybalení z krabice je nutno zařízení nainstalovat na okraj květináče.
+- V nádobě je udělán malý otvor pro kabely na senzory.
+- Senzory vlhkosti v půdě je nutno zapíchnout do půdy ke kořenům zhruba v polovině poloměru kružnice. 
+- Poloha senzorů je znároněna na obrázku:
+<p align="center">
+    <img src="img/senzory_v_pude.png"  width="450"/> 
+</p>
+
+- Pod krytem je místo pro baterie, které je nutno nainstalovat. (Baterie je nutné doplňovat!)
+- Zkontrolujte funkčnost arduina a motoru.
+- Po zkontrolování všech součástek a správného zapojení je možné zařízení zapnout a do nádržky nalít vodu.
+- Průběžně kontrolujte množství vody v nádržce a stav baterií
 
 ## Použití
 - Zařízení se dá vytisknout na 3D tiskárně a je možno změnit si rozměry.
 - Využít se dá u všech domácích rostlin.
-- Je možno takové zařízení využít i ve velkých sklenících
+- Je možno takové zařízení využít i ve velkých sklenících.
 
 ## Údržba
 - Provoz je bezúdržbový.
-- Po instalaci není třeba dělat nic
-
-
+- Je nutné průběžně kontrolovat stav vody v nádržce, stav baterií a celkový stav zařízení.
+- V případě poruchy senzorů se dají tyto senozry snadno dokoupit. [Koupit senzor vlhkosti](https://www.laskarduino.cz/arduino-senzor-vlhkosti-pudy/)
