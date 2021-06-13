@@ -5,9 +5,10 @@
 - Přesně k tomu je tu _Zavlažovač kytek_, který hlídá vlhkost v půdě, v které je rostlina zasazena.
 
 ## Konstrukční řešení
-- Zařízení je vyrobeno pomocí 3D tisku a dá se modifikovat pro určitý typ květináče
+- Zařízení je vyrobeno pomocí plastu (vstřikování do forem) a dá se modifikovat pro určitý typ květináče.
+- Je možno vytisknout i na 3D tiskárně, ale s dobře rozmístěnými podporami a na více částí, které je následně třeba spojit. 
 - Zařízení se dá snadno na květináč zavěsit a nemusí se k němu nic připojovat.
-- Chod je bezúdržbový. jen je nutné doplňovat baterky do motoru a vodu do nádržky.
+- Chod je bezúdržbový. Jen je nutné doplňovat baterky do motoru a vodu do nádržky.
 
 ### Venkovní pohled
 <p align="center">
@@ -16,31 +17,6 @@
 
 - Ze strany vyčuhuje trychtýř pro nalévání vody. Voda se pak plní do nádržky.
 - Na horní straně je pak vidět konec konvice na zalévání, z které tato voda proudí do půdy.
-
-### Vnitřní pohled
-<p align="center">
-    <img src="pictures/pozice4.png"  width="300"/> <img src="pictures/pozice5.png"  width="300"/> <img src="pictures/pozice6.png" width="300"/>
-</p>
-
-- Pod horním víkem se schovává technická část zařízení.
-- Toto víko se dá snadno odšroubovat.
-- Nachází se tam: 
-  - přihrádka pro baterie pro jejich snadnou výměnu
-  - Arduino pro řízení celého systému
-  - do Arduina také vede kabel se senzory z květináče
-  - motor, který pohání vrtuli
-
-### Funkce motoru
-<p align="center">
-    <img src="pictures/pozice7.png"  width="300"/> <img src="pictures/pozice8.png"  width="300"/> <img src="pictures/pozice3.png" width="300"/>
-</p>
-
-- Motor, kterému dává signály Arduino, pohání vrtuli.
-- Vrtule je na spodu nádržky na vodu a žene vodu trubicí, která vede pod nádržkou. 
-- Díky podtlaku se tato voda dostane až do konvice na zalévání a voda se začne rozprašovat po povrchu půdy.
-<p align="center">
-    <img src="pictures/pozice9.png"  width="500"/> 
-</p>
 
 ## Stručný popis fungování
 - Pokud vlhkost v půdě klesne pod danou mez, [senzor vlhkosti](https://www.laskarduino.cz/arduino-senzor-vlhkosti-pudy/) vyšle signály do Arduina.
@@ -65,7 +41,7 @@
 - Průběžně kontrolujte množství vody v nádržce a stav baterií
 
 ## Použití
-- Zařízení se dá vytisknout na 3D tiskárně a je možno změnit si rozměry.
+- Zařízení se dá v případě potřeby vytisknout na 3D tiskárně a je možno změnit si rozměry.
 - Využít se dá u všech domácích rostlin.
 - Je možno takové zařízení využít i ve velkých sklenících.
 
