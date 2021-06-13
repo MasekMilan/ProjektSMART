@@ -43,7 +43,7 @@ O použití a instalaci zařízenív v souboru [README_pro_uzivatele.md](README_
 
 ### Součástky
 
-- 1x Arduino Uno
+- 1x Arduino Nano
 - 1x Motor
 - 1x Potenciometr
 - 1x Vlhkoměr (v tinkercadu nahradit fotorezistorem)
