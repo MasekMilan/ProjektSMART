@@ -22,7 +22,7 @@ O použití a instalaci zařízenív v souboru [README_pro_uzivatele.md](README_
 
 - Motor, kterému dává signály Arduino, pohání vrtuli.
 - Vrtule je na spodu nádržky na vodu a žene vodu trubicí, která vede pod nádržkou. 
-- Díky podtlaku se tato voda dostane až do konvice na zalévání a voda se začne rozprašovat po povrchu půdy.
+- Tato voda dostane až do konvice na zalévání a voda se začne rozprašovat po povrchu půdy.
 <p align="center">
     <img src="pictures/pozice9.png"  width="500"/> 
 </p>
