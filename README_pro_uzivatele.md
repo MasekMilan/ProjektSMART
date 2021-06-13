@@ -22,7 +22,7 @@
     <img src="pictures/pozice4.png"  width="300"/> <img src="pictures/pozice5.png"  width="300"/> <img src="pictures/pozice6.png" width="300"/>
 </p>
 
-- Pod horním víkem se chovává technická část zařízení.
+- Pod horním víkem se schovává technická část zařízení.
 - Toto víko se dá snadno odšroubovat.
 - Nachází se tam: 
   - přihrádka pro baterie pro jejich snadnou výměnu
@@ -38,6 +38,9 @@
 - Motor, kterému dává signály Arduino, pohání vrtuli.
 - Vrtule je na spodu nádržky na vodu a žene vodu trubicí, která vede pod nádržkou. 
 - Díky podtlaku se tato voda dostane až do konvice na zalévání a voda se začne rozprašovat po povrchu půdy.
+<p align="center">
+    <img src="pictures/pozice9.png"  width="500"/> 
+</p>
 
 ## Stručný popis fungování
 - Pokud vlhkost v půdě klesne pod danou mez, [senzor vlhkosti](https://www.laskarduino.cz/arduino-senzor-vlhkosti-pudy/) vyšle signály do Arduina.
@@ -49,7 +52,12 @@
 
 ## Instalace
 - Po vybalení z krabice je nutno zařízení nainstalovat na okraj květináče.
-- V nádobě je udělán malý otvor pro kabely na senzory.
+- V nádobě je udělán malý otvor pro kabely na senzory. 
+- To je znázorněno na obrázku:
+<p align="center">
+    <img src="pictures/pozice10.png"  width="500"/> 
+</p>
+
 - Senzory vlhkosti v půdě je nutno zapíchnout do půdy v oblasti kořenů.
 - Pod krytem je místo pro baterie, které je nutno nainstalovat. (Baterie je nutné doplňovat!)
 - Zkontrolujte funkčnost Arduina a motoru.
