@@ -50,14 +50,9 @@
 ## Instalace
 - Po vybalení z krabice je nutno zařízení nainstalovat na okraj květináče.
 - V nádobě je udělán malý otvor pro kabely na senzory.
-- Senzory vlhkosti v půdě je nutno zapíchnout do půdy ke kořenům zhruba v polovině poloměru kružnice. 
-- Poloha senzorů je znároněna na obrázku:
-<p align="center">
-    <img src="img/senzory_v_pude.png"  width="450"/> 
-</p>
-
+- Senzory vlhkosti v půdě je nutno zapíchnout do půdy v oblasti kořenů.
 - Pod krytem je místo pro baterie, které je nutno nainstalovat. (Baterie je nutné doplňovat!)
-- Zkontrolujte funkčnost arduina a motoru.
+- Zkontrolujte funkčnost Arduina a motoru.
 - Po zkontrolování všech součástek a správného zapojení je možné zařízení zapnout a do nádržky nalít vodu.
 - Průběžně kontrolujte množství vody v nádržce a stav baterií
 
