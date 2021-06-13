@@ -7,11 +7,11 @@
 - 1x Motor
 - 1x Potenciometr
 - 1x Vlhkoměr (v tinkercadu nahradit fotorezistorem)
-- 2x rezistor
+- 2x Rezistor
 
 ## Zapojení
 
-- Vlhkoměr - pokud je v půdě málo vlhkosti, spustí je zalévání.
+- Vlhkoměr - pokud je v půdě málo vlhkosti, spustí se zalévání.
 - Potenciometr - možnost změnit rychlost motoru, a tím změnit množství vody za 1s.
 
 ![zapojeni](img/motor_picture_tkc.png)
