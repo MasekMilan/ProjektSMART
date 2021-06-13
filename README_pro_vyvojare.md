@@ -1,5 +1,5 @@
 # Příručka pro popis funkce zařízení _Zavlažovač kytek_
-
+O použití a instalaci zařízenív v souboru [README_pro_uzivatele.md](README_pro_uzivatele.md):
 ## Konstrukční řešení
 
 ### Vnitřní pohled
@@ -41,7 +41,7 @@
 
 ## Zapojení motoru a Arudina
 
-## Součástky
+### Součástky
 
 - 1x Arduino Uno
 - 1x Motor
@@ -49,14 +49,14 @@
 - 1x Vlhkoměr (v tinkercadu nahradit fotorezistorem)
 - 2x rezistor
 
-## Zapojení
+### Zapojení
 
 - Vlhkoměr - pokud je v půdě málo vlhkosti, spustí je zalévání.
 - Potenciometr - možnost změnit rychlost motoru, a tím změnit množství vody za 1s.
 
 ![zapojeni](img/motor_picture_tkc.png)
 
-## Kód do Arduina
+### Kód do Arduina
 ```
 
 void setup()
