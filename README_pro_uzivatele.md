@@ -2,7 +2,7 @@
 O zapojení a funkčnosti zařízení v souboru [README_pro_vyvojare.md](README_pro_vyvojare.md)
 ## Úvod
 - Každému z nás už se jistě aspoň jednou stalo, že kytky zapomněl zalít a květina uschla.
-- Přesně k tomu je tu _Zavlažovač kytek_, který hlídá vlhkost v půdě, v které je rostlina zasazena.
+- Přesně k tomu je tu _Zavlažovač kytek_, který hlídá vlhkost v půdě, ve které je rostlina zasazena.
 
 ## Konstrukční řešení
 - Zařízení je vyrobeno pomocí plastu (vstřikování do forem) a dá se modifikovat pro určitý typ květináče.
@@ -22,7 +22,7 @@ O zapojení a funkčnosti zařízení v souboru [README_pro_vyvojare.md](README_
 - Pokud vlhkost v půdě klesne pod danou mez, [senzor vlhkosti](https://www.laskarduino.cz/arduino-senzor-vlhkosti-pudy/) vyšle signály do Arduina.
 - Senzor dává logické signály 0 a 1 pro rozpoznání, jestli se má motor zapínat nebo ne.
 - Arduino zapne motor, který je připojen na vrtuli.
-- Vrtule se roztočí a žene vodu seměrem vzůhuru do konvice, která vodu rozmístí po povrchu půdy.
+- Vrtule se roztočí a žene vodu směrem vzhůru do konvice, která vodu rozmístí po povrchu půdy.
 - Až bude vlhkost v půdě opět dobrá, senzory vlhkosti vyšlou signály Arduinu a to vypne motor.
 - Vrtule se pak tedy točí do té doby, než je vlhkost v půdě opět v normálu.
 
@@ -48,4 +48,4 @@ O zapojení a funkčnosti zařízení v souboru [README_pro_vyvojare.md](README_
 ## Údržba
 - Provoz je bezúdržbový.
 - Je nutné průběžně kontrolovat stav vody v nádržce, stav baterií a celkový stav zařízení.
-- V případě poruchy senzorů se dají tyto senozry snadno dokoupit. [Koupit senzor vlhkosti](https://www.laskarduino.cz/arduino-senzor-vlhkosti-pudy/)
+- V případě poruchy senzorů se dají tyto senzory snadno dokoupit. [Koupit senzor vlhkosti.](https://www.laskarduino.cz/arduino-senzor-vlhkosti-pudy/)

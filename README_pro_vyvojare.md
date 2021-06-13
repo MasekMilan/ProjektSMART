@@ -35,7 +35,7 @@ O použití a instalaci zařízenív v souboru [README_pro_uzivatele.md](README_
 </p>
 
 - Arduino zapne motor, který je připojen na vrtuli.
-- Vrtule se roztočí a žene vodu seměrem vzůhuru do konvice, která vodu rozmístí po povrchu půdy.
+- Vrtule se roztočí a žene vodu směrem vzhůru do konvice, která vodu rozmístí po povrchu půdy.
 - Až bude vlhkost v půdě opět dobrá, senzory vlhkosti vyšlou signály Arduinu a to vypne motor.
 - Vrtule se pak tedy točí do té doby, než je vlhkost v půdě opět v normálu.
 
@@ -51,7 +51,7 @@ O použití a instalaci zařízenív v souboru [README_pro_uzivatele.md](README_
 
 ### Zapojení
 
-- Vlhkoměr - pokud je v půdě málo vlhkosti, spustí je zalévání.
+- Vlhkoměr - pokud je v půdě málo vlhkosti, spustí se zalévání.
 - Potenciometr - možnost změnit rychlost motoru, a tím změnit množství vody za 1s.
 
 ![zapojeni](img/motor_picture_tkc.png)
