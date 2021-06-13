@@ -1,5 +1,5 @@
 # Příručka pro popis funkce zařízení _Zavlažovač kytek_
-O použití a instalaci zařízenív v souboru [README_pro_uzivatele.md](README_pro_uzivatele.md):
+O použití a instalaci zařízenív v souboru [README_pro_uzivatele.md](README_pro_uzivatele.md)
 ## Konstrukční řešení
 
 ### Vnitřní pohled
