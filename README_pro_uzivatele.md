@@ -1,5 +1,5 @@
 # Příručka pro použití zařízení _Zavlažovač kytek_
-
+O zapojení a funkčnosti zařízení v souboru [README_pro_vyvojare.md](README_pro_vyvojare.md)
 ## Úvod
 - Každému z nás už se jistě aspoň jednou stalo, že kytky zapomněl zalít a květina uschla.
 - Přesně k tomu je tu _Zavlažovač kytek_, který hlídá vlhkost v půdě, v které je rostlina zasazena.
