@@ -3,7 +3,7 @@
 
 ## Požadavky
 
-- 1x Arduino Uno
+- 1x Arduino Nano
 - 1x Motor
 - 1x Potenciometr
 - 1x Vlhkoměr (v tinkercadu nahradit fotorezistorem)
